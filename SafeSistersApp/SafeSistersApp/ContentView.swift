@@ -1,61 +1,58 @@
-//
-//  ContentView.swift
-//  SafeSistersApp
-//
-//  Created by Valeria Enríquez Limón on 21/10/24.
-//
-
 import SwiftUI
-import SwiftData
 
 struct ContentView: View {
-    @Environment(\.modelContext) private var modelContext
-    @Query private var items: [Item]
-
     var body: some View {
-        NavigationSplitView {
-            List {
-                ForEach(items) { item in
-                    NavigationLink {
-                        Text("Item at \(item.timestamp, format: Date.FormatStyle(date: .numeric, time: .standard))")
-                    } label: {
-                        Text(item.timestamp, format: Date.FormatStyle(date: .numeric, time: .standard))
+        ZStack {
+            Color(red: 0.8, green: 0.2, blue: 0.4) // Deep pink background
+                .ignoresSafeArea()
+            
+            VStack {
+                Spacer()
+                
+                ZStack {
+                    Text("SISTER")
+                        .font(.system(size: 60, weight: .bold))
+                        .foregroundColor(.purple)
+                    
+                    Text("SAFE")
+                        .font(.system(size: 30, weight: .bold))
+                        .foregroundColor(.white)
+                        .offset(y: 20)
+                }
+                
+                Text("Tu círculo de confianza a tu alcance")
+                    .foregroundColor(.white)
+                    .padding(.top, 5)
+                
+                Spacer()
+                
+                Button(action: {
+                    // Handle Apple sign in
+                }) {
+                    HStack {
+                        Image(systemName: "apple.logo")
+                        Text("Sign in with Apple")
                     }
+                    .foregroundColor(.black)
+                    .padding()
+                    .frame(maxWidth: .infinity)
+                    .background(Color.white)
+                    .cornerRadius(8)
                 }
-                .onDelete(perform: deleteItems)
-            }
-            .toolbar {
-                ToolbarItem(placement: .navigationBarTrailing) {
-                    EditButton()
+                .padding(.horizontal)
+                
+                Button("Tengo un código") {
+                    // Handle code entry
                 }
-                ToolbarItem {
-                    Button(action: addItem) {
-                        Label("Add Item", systemImage: "plus")
-                    }
-                }
-            }
-        } detail: {
-            Text("Select an item")
-        }
-    }
-
-    private func addItem() {
-        withAnimation {
-            let newItem = Item(timestamp: Date())
-            modelContext.insert(newItem)
-        }
-    }
-
-    private func deleteItems(offsets: IndexSet) {
-        withAnimation {
-            for index in offsets {
-                modelContext.delete(items[index])
+                .foregroundColor(.white)
+                .padding()
             }
         }
     }
 }
 
-#Preview {
-    ContentView()
-        .modelContainer(for: Item.self, inMemory: true)
+struct ContentView_Previews: PreviewProvider {
+    static var previews: some View {
+        ContentView()
+    }
 }
