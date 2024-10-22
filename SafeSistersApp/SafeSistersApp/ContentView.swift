@@ -24,7 +24,7 @@ struct ContentView: View {
                     .foregroundColor(.white)
                     .padding(.top, 5)
                 
-                Text("Prueba")
+                Text("Prueba2")
                 
                 Spacer()
                 
