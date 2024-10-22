@@ -24,6 +24,8 @@ struct ContentView: View {
                     .foregroundColor(.white)
                     .padding(.top, 5)
                 
+                Text("Prueba")
+                
                 Spacer()
                 
                 Button(action: {
@@ -46,6 +48,7 @@ struct ContentView: View {
                 }
                 .foregroundColor(.white)
                 .padding()
+                
             }
         }
     }
