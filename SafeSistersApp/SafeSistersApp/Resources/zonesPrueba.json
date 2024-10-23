@@ -1,0 +1,40 @@
+{
+  "zones": [
+    {
+      "name": "High Risk Zone",
+      "coordinates": [
+        {"latitude": 19.4325, "longitude": -99.1332},
+        {"latitude": 19.4330, "longitude": -99.1325},
+        {"latitude": 19.4320, "longitude": -99.1315}
+      ],
+      "riskLevel": "high"
+    },
+    {
+      "name": "Moderate Risk Zone",
+      "coordinates": [
+        {"latitude": 19.4305, "longitude": -99.1335},
+        {"latitude": 19.4310, "longitude": -99.1345},
+        {"latitude": 19.4290, "longitude": -99.1350}
+      ],
+      "riskLevel": "moderate"
+    },
+    {
+      "name": "Safe Zone",
+      "coordinates": [
+        {"latitude": 19.4340, "longitude": -99.1320},
+        {"latitude": 19.4335, "longitude": -99.1310},
+        {"latitude": 19.4325, "longitude": -99.1305}
+      ],
+      "riskLevel": "safe"
+    },
+    {
+      "name": "Women-Only Zone",
+      "coordinates": [
+        {"latitude": 19.4350, "longitude": -99.1330},
+        {"latitude": 19.4345, "longitude": -99.1340},
+        {"latitude": 19.4340, "longitude": -99.1350}
+      ],
+      "riskLevel": "women"
+    }
+  ]
+}
