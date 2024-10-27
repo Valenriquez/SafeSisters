@@ -1,12 +1,13 @@
 version: '3.1'
+
 services:
   db:
     image: postgres:15
     restart: always
     environment:
-      POSTGRES_DB: ${database}
-      POSTGRES_USER: ${user}
-      POSTGRES_PASSWORD: ${password}
+      POSTGRES_DB: safesister
+      POSTGRES_USER: apiuser
+      POSTGRES_PASSWORD: 12345
       PGDATA: /var/lib/postgresql/data/pgdata
     ports:
       - "5432:5432"
@@ -14,7 +15,7 @@ services:
       - db_data:/var/lib/postgresql/data
       - ./db:/docker-entrypoint-initdb.d/  # Monta la carpeta donde está el script SQL
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U ${database}"]
+      test: ["CMD-SHELL", "pg_isready -U apiuser"]  # Usar el usuario correcto
       interval: 30s
       timeout: 10s
       retries: 5
