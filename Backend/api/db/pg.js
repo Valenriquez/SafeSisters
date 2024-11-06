@@ -9,11 +9,11 @@ const client = new Client({
     database: process.env.database,
     port: 5432, // Añadir el puerto por si no está definido
 });
+
 // Abrir la conexión a PostgreSQL
-client.connect(error => {
+client.connect((error) => {
     if (error) {
         console.log(process.env.host);
-        console.log9
         console.error('Error connecting to the database:');
         throw error;
     } else {

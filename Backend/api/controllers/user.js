@@ -41,10 +41,12 @@ async function notifyCircle(userId, dangerZone) {
 }
 
 class User {
+    // Función para obtener datos (puedes personalizarla según sea necesario)
     async getData(req, res) {
         res.send('Hello World');
     }
 
+    // Función para almacenar la ubicación del usuario
     async storeUserLocation(req, res) {
         const { userId, latitude, longitude } = req.body;
         const location = { latitude, longitude };
@@ -58,6 +60,7 @@ class User {
         }
     }
 
+    // Función para actualizar la ubicación del usuario
     async updateUserLocation(userId, location) {
         const dangerZone = await dangerousGeofence(location);
 
@@ -75,7 +78,38 @@ class User {
             DO UPDATE SET latitude = $2, longitude = $3, updated_at = CURRENT_TIMESTAMP
         `, [userId, location.latitude, location.longitude]);
     }
+
+    // Función para crear un usuario
+    async createUser(req, res) {
+        const { username, email } = req.body;
+
+        // Validación simple
+        if (!username || !email) {
+            return res.status(400).json({ error: 'Username y email son requeridos' });
+        }
+
+        try {
+            // Realizar la inserción del usuario en la base de datos
+            const result = await pg.query(
+                `INSERT INTO users (username, email)
+                VALUES ($1, $2)
+                RETURNING user_id, username, email, created_at`,
+                [username, email]
+            );
+
+            // Retornar la respuesta con los datos del usuario insertado
+            res.status(201).json({
+                message: 'User created successfully',
+                user: result.rows[0], // Obtener el primer (y único) resultado de la inserción
+            });
+        } catch (error) {
+            console.error('Error creating user:', error);
+            res.status(500).json({ error: 'Error interno del servidor' });
+        }
+    }
 }
+
+module.exports = User;
 
 const userController = new User();
 module.exports = userController;
