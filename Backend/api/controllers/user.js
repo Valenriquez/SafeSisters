@@ -3,7 +3,7 @@ const pg = require("../db/pg");
 // Función para verificar si un usuario está dentro de una geocerca de peligro
 async function dangerousGeofence(location) {
     const dangerZones = await pg.query('SELECT * FROM dangerZones');
-
+    console.log("dangerousGeofence")
     for (const zone of dangerZones.rows) {
         const distance = calculateDistance(location, {
             latitude: zone.latitude,
@@ -40,6 +40,29 @@ async function notifyCircle(userId, dangerZone) {
     }
 }
 
+ // Función para actualizar la ubicación del usuario
+async function updateUserLocation(userId, location) {
+    const dangerZone = await dangerousGeofence(location);
+    let msg = '';
+    if (dangerZone) {
+        await notifyCircle(userId, dangerZone);
+        msg = 'El usuario está en una zona peligrosa.';
+    } else {
+        msg = 'El usuario no está en ninguna zona peligrosa.';
+    }
+
+    // Guardamos la ubicación del usuario en la base de datos
+    await pg.query(`
+        INSERT INTO userLocation (user_id, latitude, longitude)
+        VALUES ($1, $2, $3)
+        ON CONFLICT (user_id) 
+        DO UPDATE SET latitude = $2, longitude = $3, updated_at = CURRENT_TIMESTAMP
+    `, [userId, location.latitude, location.longitude]);
+
+    return msg;  // Regresamos el mensaje de la zona peligrosa
+}
+
+
 class User {
     // Función para obtener datos (puedes personalizarla según sea necesario)
     async getData(req, res) {
@@ -48,36 +71,18 @@ class User {
 
     // Función para almacenar la ubicación del usuario
     async storeUserLocation(req, res) {
-        const { userId, latitude, longitude } = req.body;
+        const { user_id, latitude, longitude } = req.body;
         const location = { latitude, longitude };
-
         try {
-            await this.updateUserLocation(userId, location);
-            res.send('Ubicación guardada correctamente.');
+            // Llamamos a la función de actualización y obtenemos el mensaje de la zona peligrosa
+            const message = await updateUserLocation(user_id, location);
+            res.send({ message: message });  // Regresamos el mensaje como respuesta al usuario
         } catch (error) {
             console.error('Error al almacenar la ubicación:', error);
             res.status(500).send('Error interno del servidor.');
         }
     }
 
-    // Función para actualizar la ubicación del usuario
-    async updateUserLocation(userId, location) {
-        const dangerZone = await dangerousGeofence(location);
-
-        if (dangerZone) {
-            await notifyCircle(userId, dangerZone);
-            console.log('El usuario está en una zona peligrosa.');
-        } else {
-            console.log('El usuario no está en ninguna zona peligrosa.');
-        }
-
-        await pg.query(`
-            INSERT INTO userLocation (user_id, latitude, longitude)
-            VALUES ($1, $2, $3)
-            ON CONFLICT (user_id) 
-            DO UPDATE SET latitude = $2, longitude = $3, updated_at = CURRENT_TIMESTAMP
-        `, [userId, location.latitude, location.longitude]);
-    }
 
     // Función para crear un usuario
     async createUser(req, res) {

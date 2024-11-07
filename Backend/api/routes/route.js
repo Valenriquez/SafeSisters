@@ -13,5 +13,9 @@ router.delete('/api/circle/remove', circle.removeFromCircle);
 
 router.post('/api/addDangerZone', general.addDangerZone);
 router.post('/api/generateRandomLocation', general.generateRandomLocation);
+router.post('/api/updateUserLocation', user.storeUserLocation);
+
+
+
 
 module.exports = router;
