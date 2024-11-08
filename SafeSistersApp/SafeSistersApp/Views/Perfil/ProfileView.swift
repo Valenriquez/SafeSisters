@@ -35,7 +35,7 @@ struct ProfileView: View {
                         .aspectRatio(contentMode: .fill)
                         .frame(width: 150, height: 150)
                         .clipShape(Circle())
-                        .overlay(Circle().stroke(Color.white, lineWidth: 4))
+                        .overlay(Circle().stroke(Color.white, lineWidth: 6))
                         .shadow(radius: 10)
                         .offset(y: -(geometry.size.height * 0.31))
                         .padding(.bottom, -(geometry.size.height * 0.3))

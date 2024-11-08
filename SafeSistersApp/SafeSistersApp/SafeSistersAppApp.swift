@@ -10,6 +10,10 @@ import SwiftData
 
 @main
 struct SafeSistersAppApp: App {
+    
+    @StateObject var viewModel = LoginViewModel()
+    
+    
     var sharedModelContainer: ModelContainer = {
         let schema = Schema([
             Item.self,
@@ -25,8 +29,20 @@ struct SafeSistersAppApp: App {
 
     var body: some Scene {
         WindowGroup {
+            /*
+            if viewModel.isSignedIn {
+                ProfileView()
+            } else if viewModel.showCodeEntryView {
+                CodeEntryView()
+            } else {
+                LoginView()
+            }
+            */
             ContentView()
+            //LoginView()
         }
         .modelContainer(sharedModelContainer)
     }
 }
+
+

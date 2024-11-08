@@ -1,0 +1,44 @@
+{
+    "zones": [
+        {
+            "id": "1",
+            "type": "high",
+            "coordinates": [
+                {"latitude": 19.432, "longitude": -99.133},
+                {"latitude": 19.433, "longitude": -99.134},
+                {"latitude": 19.434, "longitude": -99.133},
+                {"latitude": 19.433, "longitude": -99.132}
+            ]
+        },
+        {
+            "id": "2",
+            "type": "moderate",
+            "coordinates": [
+                {"latitude": 19.435, "longitude": -99.135},
+                {"latitude": 19.436, "longitude": -99.136},
+                {"latitude": 19.437, "longitude": -99.135},
+                {"latitude": 19.436, "longitude": -99.134}
+            ]
+        },
+        {
+            "id": "3",
+            "type": "safe",
+            "coordinates": [
+                {"latitude": 19.438, "longitude": -99.137},
+                {"latitude": 19.439, "longitude": -99.138},
+                {"latitude": 19.440, "longitude": -99.137},
+                {"latitude": 19.439, "longitude": -99.136}
+            ]
+        },
+        {
+            "id": "4",
+            "type": "women",
+            "coordinates": [
+                {"latitude": 19.435, "longitude": -99.136},
+                {"latitude": 19.436, "longitude": -99.137},
+                {"latitude": 19.437, "longitude": -99.136},
+                {"latitude": 19.436, "longitude": -99.135}
+            ]
+        }
+    ]
+}

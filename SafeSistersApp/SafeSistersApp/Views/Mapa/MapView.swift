@@ -38,7 +38,6 @@ struct MapView: View {
                             .resizable()
                             .frame(width: 50, height: 50)
                             .clipShape(Circle())
-                            //.clipShape(Circle())
                             .overlay(Circle().stroke(selectedPerson.color, lineWidth: 4))
                         VStack(alignment: .leading) {
                             Text(selectedPerson.name)

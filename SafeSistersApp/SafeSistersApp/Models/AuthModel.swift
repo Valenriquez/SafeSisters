@@ -6,3 +6,7 @@
 //
 
 import Foundation
+
+struct AuthModel {
+    // Aquí puedes manejar el modelo de autenticación, por ejemplo, guardar los tokens.
+}
